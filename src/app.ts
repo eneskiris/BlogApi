@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { authRoutes } from "./routes/auth.routes";
 import { blogRoutes } from "./routes/blog.routes";
 import mongoose from "mongoose";
+import globalErrorExceptionMiddleware from "./middleware/global_error_exception.middleware";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ db.once("open", () => {
 
 app.use("/auth", authRoutes);
 app.use("/blogs", blogRoutes);
+
+app.use(globalErrorExceptionMiddleware);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
