@@ -5,6 +5,7 @@ import { authRoutes } from "./routes/auth.routes";
 import { blogRoutes } from "./routes/blog.routes";
 import mongoose from "mongoose";
 import globalErrorExceptionMiddleware from "./middleware/global_error_exception.middleware";
+import { Request, Response } from "express";
 
 dotenv.config();
 
@@ -23,6 +24,10 @@ db.once("open", () => {
 
 app.use("/auth", authRoutes);
 app.use("/blogs", blogRoutes);
+
+app.all("*", (req: Request, res: Response) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 app.use(globalErrorExceptionMiddleware);
 

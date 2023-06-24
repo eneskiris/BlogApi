@@ -29,13 +29,13 @@ export const loginUser = async (
   const user = await UserModel.findOne({ username });
 
   if (!user) {
-    throw new Error("Invalid username or password");
+    throw new Error("Username or password is incorrect");
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new Error("Invalid username or password");
+    throw new Error("Username or password is incorrect");
   }
 
   const token = jwt.sign(
