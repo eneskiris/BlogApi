@@ -1,11 +1,10 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { authRoutes } from "./routes/auth.routes";
-import { blogRoutes } from "./routes/blog.routes";
 import mongoose from "mongoose";
 import globalErrorExceptionMiddleware from "./middleware/global_error_exception.middleware";
 import { Request, Response } from "express";
+import routes from "./routes/routes";
 
 dotenv.config();
 
@@ -22,8 +21,7 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
-app.use("/auth", authRoutes);
-app.use("/blogs", blogRoutes);
+app.use(routes);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json({ message: "Route not found" });
